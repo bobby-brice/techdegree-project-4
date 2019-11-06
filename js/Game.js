@@ -21,13 +21,13 @@
               phrase: 'Show me the money'
            },
            {
-              phrase: "You can't handle the truth"
+              phrase: "You cant handle the truth"
            },
            {
               phrase: 'Nobody puts Baby in a corner'
            },
            {
-              phrase: "There's no crying in baseball"
+              phrase: "Theres no crying in baseball"
            }
         ];
         return phrases;
@@ -47,10 +47,20 @@
       */
      startGame() {
 
-      document.getElementById('overlay').style.display = 'none';
-      const phrase = new Phrase(game.getRandomPhrase().phrase);
-      this.activePhrase = phrase;
-      phrase.addPhraseToDisplay();
+         document.getElementById('overlay').style.display = 'none';
+         const phrase = new Phrase(game.getRandomPhrase().phrase);
+         this.activePhrase = phrase;
+         phrase.addPhraseToDisplay();
+         
+         // reset the heart image and misses
+         this.missed = 0;
+         const hearts = document.querySelectorAll('img');
+
+         hearts.forEach(heart => {
+            if (heart.getAttribute('src') == 'images/lostHeart.png') {
+               heart.setAttribute('src', 'images/liveHeart.png')
+            }
+         });
 
      };
 
@@ -60,22 +70,7 @@
       */
      handleInteraction(button) {
         console.log(button);
-     };
-     handleInteraction() {
-        //checks to see if the button clicked by the player matches a letter in the phrase and then directs the game based on a correct or incorrect guess
 
-        //should disable the selected letters on screen keyboard
-
-        //IF incorrect guess - add .wrong css class to the selected letter keyboard button and call remove life
-
-        this.removeLife();
-
-        //IF correct add the .chosen class
-        this.showMatchedLetter();
-        this.checkForWin();
-
-        //If the player has won the game, call
-        this.gameOver();
      }
 
      /**
@@ -84,10 +79,18 @@
       * Checks if player has remaining lives and ends game if player is out
       */
      removeLife() {
-        //removes a life from the scoreboard by replacing one o the liveHeart.png images with a lostHeart.png
-        //increments the missed property
-        //5 missed guesses calls the 
-        this.gameOver();
+         const hearts = document.querySelectorAll('img');
+         const health = this.missed++;
+
+         hearts.forEach(function (heart, index){
+            if (index == health) {
+               heart.setAttribute('src', 'images/lostHeart.png');
+            }
+         });
+
+         if (health == 4) {
+            this.gameOver(this.checkForWin());
+         }  
      }
 
       /**
@@ -97,6 +100,21 @@
       */
      checkForWin() {
         //checks if player has revealed all of the letters in the active phrase
+        const ul = document.querySelector('ul');
+        const show = ul.querySelectorAll('.show');
+
+        
+        let phrase = this.activePhrase.phrase.split(''); 
+         phrase = phrase.filter(space => {
+            return /\S/.test(space);
+         });  
+
+         if (show.length == phrase.length) {
+            return true;
+         }
+         else{
+           return false;
+         }  
      }
 
      /**
@@ -104,8 +122,18 @@
       * @param {boolean} gameWon - Whether or not the user won the game
       */
      gameOver(gameWon) {
-        //displays the original start screen overlay
-        //updates the h1 element with a friendly win or lose message
-        //replaces start css class with either win or lose css class
+         const overlay = document.getElementById('overlay');
+         const message = document.getElementById('game-over-message');
+         overlay.style.display = 'block';
+
+         if (gameWon == true) {
+            message.innerHTML = 'You Win!';
+            overlay.setAttribute('class', 'win');
+            
+         }
+         else if (gameWon == false) {
+            message.innerHTML = 'Better luck next time';
+            overlay.setAttribute('class', 'lose');  
+         }
      }
  }

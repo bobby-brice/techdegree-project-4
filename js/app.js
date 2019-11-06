@@ -10,10 +10,10 @@ startButton.addEventListener('click', function () {
 });
 
 //event listener to handle the virual keyboard
-// const virtualKey = document.querySelector('div#qwerty');
-// virtualKey.addEventListener('click', (event) => {
-//     if (event.target.type === 'submit') {
-//         game.handleInteraction(event.target);
-//     }
-// });
+const virtualKey = document.querySelector('div#qwerty');
+virtualKey.addEventListener('click', (event) => {
+    if (event.target.type === 'submit') {
+        game.handleInteraction(event.target);
+    }
+});
 

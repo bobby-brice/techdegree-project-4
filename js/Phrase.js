@@ -29,14 +29,24 @@
      * @param (string) letter - Letter to check
      */
      checkLetter(letter) {
-        
+         const phrase = this.phrase.split('');
+         let phraseVal = phrase.includes(letter);
+         return phraseVal;
+       
      }
 
      /**
       * Displays passed letter on screen after a match is found
       * @param (string) letter - Letter to display
       */
-     showMatchedLetter() {
-         
+     showMatchedLetter(letter) {
+         const ul = document.querySelector('ul');
+         const li = ul.querySelectorAll('.hide');
+
+         li.forEach(element => {
+             if (letter == element.innerHTML) { //if the li element is equal to the contents of elements html
+                 element.setAttribute('class', 'show letter'); //add a class of show
+             }
+         });
      }
  }
