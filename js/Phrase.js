@@ -13,11 +13,11 @@
      addPhraseToDisplay() {
      
         let addHTML = '';
-        for (let i = 0; i < this.phrase.length; i++) {
-            if (this.phrase[i] === ' ') {
+        for (let i = 0; i < this.phrase.length; i++) { //loop through the phrase
+            if (this.phrase[i] === ' ') { // if the phrase has a space, add html with a space
                 addHTML += `<li class='space'> </li>`;
             }
-            else {
+            else { //otherwise add the letter in the phrase
                 addHTML += `<li class="hide letter ${this.phrase[i]}">${this.phrase[i]}</li>`;
             }
         }
@@ -29,8 +29,8 @@
      * @param (string) letter - Letter to check
      */
      checkLetter(letter) {
-         const phrase = this.phrase.split('');
-         let phraseVal = phrase.includes(letter);
+         const phrase = this.phrase.split(''); //changes phrase to string of letters
+         let phraseVal = phrase.includes(letter); //if the phrase includes the letter, return it
          return phraseVal;
        
      }

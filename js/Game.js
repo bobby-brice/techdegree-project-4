@@ -48,8 +48,8 @@
      startGame() {
 
          document.getElementById('overlay').style.display = 'none';
-         const phrase = new Phrase(game.getRandomPhrase().phrase);
-         this.activePhrase = phrase;
+         const phrase = new Phrase(game.getRandomPhrase().phrase); //calls a new phrase upon each start
+         this.activePhrase = phrase;   //sets the state of the active phrase
          phrase.addPhraseToDisplay();
          
          // reset the heart image and misses
@@ -57,7 +57,7 @@
          const hearts = document.querySelectorAll('img');
 
          hearts.forEach(heart => {
-            if (heart.getAttribute('src') == 'images/lostHeart.png') {
+            if (heart.getAttribute('src') == 'images/lostHeart.png') { //replaces the lost hearts with liveHeart
                heart.setAttribute('src', 'images/liveHeart.png')
             }
          });
@@ -82,14 +82,14 @@
          const hearts = document.querySelectorAll('img');
          const health = this.missed++;
 
-         hearts.forEach(function (heart, index){
+         hearts.forEach(function (heart, index){ //iterates over each heart container to see if its index matches the element img and replaces the img to lostHeart
             if (index == health) {
                heart.setAttribute('src', 'images/lostHeart.png');
             }
          });
 
          if (health == 4) {
-            this.gameOver(this.checkForWin());
+            this.gameOver(this.checkForWin()); //index starts at 0 so with 5 lives we see if they have missed 4 to trigger game over
          }  
      }
 
@@ -104,12 +104,12 @@
         const show = ul.querySelectorAll('.show');
 
         
-        let phrase = this.activePhrase.phrase.split(''); 
-         phrase = phrase.filter(space => {
-            return /\S/.test(space);
+        let phrase = this.activePhrase.phrase.split(''); //breaks the phrase down into ind. letters
+         phrase = phrase.filter(space => { //filter to remove spaces, otherwise the length will not match correct # of spaces to win
+            return /\S/.test(space); //regex found on StackOverflow
          });  
 
-         if (show.length == phrase.length) {
+         if (show.length == phrase.length) { //if the list items equal the filterd phrase, win = true
             return true;
          }
          else{
