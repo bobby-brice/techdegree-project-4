@@ -124,7 +124,7 @@
      gameOver(gameWon) {
          const overlay = document.getElementById('overlay');
          const message = document.getElementById('game-over-message');
-         overlay.style.display = 'block';
+         overlay.style.display = 'flex';
 
          if (gameWon == true) {
             message.innerHTML = 'You Win!';
