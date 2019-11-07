@@ -34,24 +34,10 @@
      };
      
      /**
-      * Selects random phrase from phrases property
-      * @return {Object} Phrase object chosen to be used
-      */
-     getRandomPhrase() {
-        const randomPhrase = Math.floor(Math.random() * this.phrases.length);
-        return this.phrases[randomPhrase];
-     }
-
-     /**
       * Begins game by selecting a random phrase and displaying it to user
       */
      startGame() {
 
-         document.getElementById('overlay').style.display = 'none';
-         const phrase = new Phrase(game.getRandomPhrase().phrase); //calls a new phrase upon each start
-         this.activePhrase = phrase;   //sets the state of the active phrase
-         phrase.addPhraseToDisplay();
-         
          // reset the heart image and misses
          this.missed = 0;
          const hearts = document.querySelectorAll('img');
@@ -62,15 +48,59 @@
             }
          });
 
+         //reset the chosen and wrong class on the keyboard
+         const buttons = document.querySelectorAll('button');
+
+         buttons.forEach(button => { //iterate all the buttons to change attributes and enable button
+            button.disabled = false;
+            button.setAttribute('class', 'key');
+         });
+
+         //reset the li elements from the phrase element
+         const ul = document.querySelector('ul');
+         const li = ul.querySelectorAll('li');
+
+         li.forEach(key => {
+            ul.removeChild(key);
+         });
+
+         //starts the game and gets the random phrase
+         document.getElementById('overlay').style.display = 'none';
+         const phrase = new Phrase(game.getRandomPhrase().phrase); //calls a new phrase upon each start
+         this.activePhrase = phrase;   //sets the state of the active phrase
+         phrase.addPhraseToDisplay();
      };
+
+      /**
+      * Selects random phrase from phrases property
+      * @return {Object} Phrase object chosen to be used
+      */
+     getRandomPhrase() {
+        const randomPhrase = Math.floor(Math.random() * this.phrases.length);
+        return this.phrases[randomPhrase];
+     }
 
      /**
       * Handles onscreen keyboard button clicks
       * @param (HTMLButtonElement) button - The clicked button element
       */
      handleInteraction(button) {
-        console.log(button);
+        button.disabled = true;
+        let keyPressed = button.innerHTML;
+        let phrase = this.activePhrase.checkLetter(keyPressed);
 
+        if (phrase == true) {
+           button.setAttribute('class', 'chosen');
+           this.activePhrase.showMatchedLetter(keyPressed);
+           game.checkForWin();
+        }
+        else {
+           button.setAttribute('class', 'wrong');
+           game.removeLife();
+        }
+        if (game.checkForWin()) {
+           game.gameOver(true);
+        }
      }
 
      /**
