@@ -10,10 +10,18 @@ startButton.addEventListener('click', function () {
 });
 
 //event listener to handle the virual keyboard
-const virtualKey = document.querySelector('div#qwerty');
-virtualKey.addEventListener('click', (event) => {
+const virtualKeyboard = document.querySelector('div#qwerty');
+
+virtualKeyboard.addEventListener('click', (event) => {
     if (event.target.type === 'submit') {
         game.handleInteraction(event.target);
     }
+});
+
+//allowing user to use regular keyboard
+document.addEventListener('keydown', function (event) {
+    
+    game.keyboardInteraction(event);
+
 });
 

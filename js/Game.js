@@ -104,6 +104,41 @@
      }
 
      /**
+      * Handles player interaction with physical keyboard
+      * @param {Object} event event object */
+
+      keyboardInteraction(event) {
+         let button;
+         const keys = document.getElementsByClassName("key");
+         const letter = event.key;
+         const correctKey = this.activePhrase.checkLetter(letter);
+
+         for (const key of keys) {
+            if (key.textContent == event.key) {
+               button = key;
+            }
+         }
+
+         if (button && !button.disabled) {
+             button.disabled = true;
+
+            if (correctKey == true){
+               button.setAttribute('class', 'chosen');
+               this.activePhrase.showMatchedLetter(letter);
+               game.checkForWin()
+            } 
+            else { 
+               button.setAttribute('class', 'wrong');
+               game.removeLife();
+               }
+            if (game.checkForWin()) {
+               game.gameOver(true);
+            }
+         }
+         
+      }
+
+     /**
       * Increases the value of the missed property
       * Removes a life from the scoreboard
       * Checks if player has remaining lives and ends game if player is out
