@@ -28,6 +28,39 @@
            },
            {
               phrase: "Theres no crying in baseball"
+           },
+           {
+              phrase: "why so serious"
+           },
+           {
+              phrase: "Im too old for this shit"
+           },
+           {
+              phrase: "resistance is futile"
+           },
+           {
+              phrase: "you shall not pass"
+           },
+           {
+              phrase: "i pity the fool"
+           },
+           {
+              phrase: "i know kung fu"
+           },
+           {
+              phrase: "to infinity and beyond"
+           },
+           {
+              phrase: "Im your huckleberry"
+           },
+           {
+              phrase: "heyyy you guys"
+           },
+           {
+              phrase: "good morning vietnam"
+           },
+           {
+              phrase: "Theres no place like home"
            }
         ];
         return phrases;
@@ -114,28 +147,27 @@
          const correctKey = this.activePhrase.checkLetter(letter);
 
          for (const key of keys) {
-            if (key.textContent == event.key) {
+            if (key.textContent == event.key) { //assigns the button to the key event
                button = key;
             }
          }
 
-         if (button && !button.disabled) {
+         if (button && !button.disabled) { // ensures the buttons are not disabled on key events
              button.disabled = true;
 
-            if (correctKey == true){
+            if (correctKey == true){ //if the the key event matches the phrase letter
                button.setAttribute('class', 'chosen');
                this.activePhrase.showMatchedLetter(letter);
                game.checkForWin()
             } 
             else { 
-               button.setAttribute('class', 'wrong');
+               button.setAttribute('class', 'wrong'); //follows same logic as handleInteraction()
                game.removeLife();
                }
             if (game.checkForWin()) {
                game.gameOver(true);
             }
-         }
-         
+         }  
       }
 
      /**

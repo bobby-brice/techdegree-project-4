@@ -60,9 +60,18 @@ button {
   cursor: pointer;
 }
 
+.keyrow .key {
+  box-shadow: 1px 4px 1px 4px rgba(68, 80, 105, 0.6);
+}
+
 #btn__reset {
 	width: 200px;
 	margin: 0 auto;
+}
+
+#btn__reset:hover {
+  transform: scale(1.75);
+  transition: all 0.4s ease;
 }
 
 .main-container {
